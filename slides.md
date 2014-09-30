@@ -1,9 +1,10 @@
-%title: From 0 to Kernel in an hour
+%title: From 0 to Kernel and Some Real-Time stuff
 %author: Gianni Gambetti (VolatileDream)
 %date: 2014
 %comments: A talk about kernels targeted at 2nd year CS students at UW.
 
-## ker·nel
+
+`ker·nel`
 
 > the central or most important part of something
 
@@ -11,15 +12,15 @@
 
 ## Overview
 
-* about kernels (5 w)
+* about kernels
+* micro vs macro
 * writing your own kernel
+* bits about real-time
 * next steps (or continued reading)
 
 -----------------------------------------------------------
 
 ## What is a kernel?
-
-
 
 * what it does
   - handles system boot (from other software/hardware)
@@ -39,11 +40,33 @@
 
 ## Why?
 
+* multi user systems
+  - pre-emptive scheduling
+* indirect hardware access
+  - gpu/hard disk type doesn't matter
+
 -----------------------------------------------------------
 
-## How?
+## Micro vs Macro
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+
+## Writing a Kernel
+
+Your first kernel, let's start simple.
 
 -----------------------------------------------------------
 
 ## Writing a Kernel
+
+Your first kernel, let's start simple.
+
+    void main(void){
+        print("hello world\n");
+    }
+
+Wasn't that easy?
+
+-----------------------------------------------------------
 
