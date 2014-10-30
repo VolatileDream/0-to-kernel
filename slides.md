@@ -13,8 +13,15 @@
 ## Overview
 
 * about kernels
+** What
+** Where
+** Why
 * micro vs macro
 * writing your own kernel
+** IO
+** Scheduling
+** Context Switch
+** System Calls
 * bits about real-time
 * next steps (or continued reading)
 
