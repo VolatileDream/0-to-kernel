@@ -128,7 +128,7 @@ Now the bad news: it's not that easy.
 
 * Remember the documentation you read?
 * This is hard: You don't get any output until it works
-* But it's easy: maybe 20 lines of code
+* But it's easy: 14 lines of code
 
    1)   volatile int \* UART_IO = (int*) 0x808C000;
    2)   volatile int \* UART_FLAGS = UART_IO + UART_FLAG_OFFSET;
@@ -153,7 +153,7 @@ Now the bad news: it's not that easy.
 
 * Remember the documentation you read?
 * This is hard: You don't get any output until it works
-* But it's easy: maybe 20 lines of code
+* But it's easy: 14 lines of code
 * Where did those constants come from?
 
    1)   volatile int \* UART_IO = (int*) _*0x808C000*_;
@@ -162,4 +162,4 @@ Now the bad news: it's not that easy.
    4)       while( !(UART_FLAGS & _*UART_IN_BITS*_) ) {
    A)       while( !(UART_FLAGS & _*UART_OUT_BITS*_) ) {
 
-* They're all documented somewhere...
+* They're all documented _*somewhere*_...
