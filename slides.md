@@ -158,7 +158,6 @@ Now the bad news: it's not that easy.
 
    1)   volatile int \* UART_IO = (int*) _*0x808C000*_;
    2)   volatile int \* UART_FLAGS = UART_IO + _*UART_FLAG_OFFSET*_;
-
    4)       while( !(UART_FLAGS & _*UART_IN_BITS*_) ) {
    A)       while( !(UART_FLAGS & _*UART_OUT_BITS*_) ) {
 
