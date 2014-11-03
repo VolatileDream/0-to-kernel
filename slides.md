@@ -67,66 +67,99 @@
 
 ## Writing a Kernel
 
-Your first kernel, let's start simple.
+    void main(void){
+        print("hello world\n");
+    }
 
-* Read Documentation
-
------------------------------------------------------------
-
-## Writing a Kernel
-
-Your first kernel, let's start simple.
-
-* Read Documentation
- * One week of light reading
- * Size of documentation is inversly proportional to component size
- * *~50 for TS-7200*
- * *~600 for Cirrus Logic System on a Chip*
- * *~1.5k for ARMv4 Technical + Architecture Reference Manuals*
- * *~3.5k for Intel® 64 and IA-32 Architectures Software Developer Manuals*
+That looks pretty easy, right?
 
 -----------------------------------------------------------
 
 ## Writing a Kernel
-
-Your first kernel, let's start simple.
-
-* Read Documentation
- * One week of light reading
- * Size of documentation is inversly proportional to component size
- * *~50 for TS-7200*
- * *~600 for Cirrus Logic System on a Chip*
- * *~1.5k for ARMv4 Technical + Architecture Reference Manuals*
- * *~3.5k for Intel® 64 and IA-32 Architectures Software Developer Manuals*
- * But proportional to the difficulty of the software being written
-
------------------------------------------------------------
-
-## Writing a Kernel
-
-* Read Documentation
-* Write IO
-
------------------------------------------------------------
-
-## Writing a Kernel
-
-* Read Documentation
-* Write IO
- * This is hard: You don't get any output until it works
- * Maybe 30 lines of code
-
------------------------------------------------------------
-
-## Writing a Kernel
-
-Your first kernel, let's start simple.
 
     void main(void){
         print("hello world\n");
     }
 
-Wasn't that easy?
+That looks pretty easy, right?
+
+Now the bad news: it's not that easy.
 
 -----------------------------------------------------------
 
+## Writing a Kernel - Steps
+
+* Read Documentation
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Reading Documentation
+
+* One week of light reading
+* Size of documentation is inversly proportional to component size
+* *~50 for TS-7200*
+* *~600 for Cirrus Logic System on a Chip*
+* *~1.5k for ARMv4 Technical + Architecture Reference Manuals*
+* *~3.5k for Intel® 64 and IA-32 Architectures Software Developer Manuals*
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Steps
+
+* Read Documentation
+* Write IO
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Writing IO
+
+* Remember the documentation you read?
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Writing IO
+
+* Remember the documentation you read?
+* This is hard: You don't get any output until it works
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Writing IO
+
+* Remember the documentation you read?
+* This is hard: You don't get any output until it works
+* But it's easy: maybe 20 lines of code
+
+   1)   volatile int \* UART_IO = (int*) 0x808C000;
+   2)   volatile int \* UART_FLAGS = UART_IO + UART_FLAG_OFFSET;
+
+   3)   char read(){
+   4)       while( !(UART_FLAGS & UART_IN_BITS) ) {
+   5)           /* Busy Waiting \*/
+   6)       }
+   7)       return (char)\*data;
+   8)   }
+
+   9)   void write(char c){
+   A)       while( !(UART_FLAGS & UART_OUT_BITS) ) {
+   B)           /* Busy Waiting \*/
+   C)       }
+   D)       \*data = c;
+   E)   }
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Writing IO
+
+* Remember the documentation you read?
+* This is hard: You don't get any output until it works
+* But it's easy: maybe 20 lines of code
+* Where did those constants come from?
+
+   1)   volatile int \* UART_IO = (int*) _*0x808C000*_;
+   2)   volatile int \* UART_FLAGS = UART_IO + _*UART_FLAG_OFFSET*_;
+
+   4)       while( !(UART_FLAGS & _*UART_IN_BITS*_) ) {
+   A)       while( !(UART_FLAGS & _*UART_OUT_BITS*_) ) {
+
+* They're all documented somewhere...
