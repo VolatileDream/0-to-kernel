@@ -12,56 +12,62 @@
 
 ## Overview
 
-* about kernels
+* About kernels
  * What
  * Where
  * Why
-* writing your own kernel
+* Kernel Style
+* Writing your own kernel
  * Before Starting
  * IO
  * Context Switch
  * Scheduling
  * System Calls
-* next steps (or continued reading)
+* Next steps and more reading
 
 -----------------------------------------------------------
 
 ## What is a kernel?
 
-* what it does
- * handles system boot (from other software/hardware)
- * *This is magic*
- * sets up the system to run other software
- * _usually_ talks to hardware on behalf of system software
-* where it lives
- * a binary image on somewhere on your filesystem
+* What it does
+ * Handles system boot from other software & hardware ( *magic* )
+ * _Usually_ talks to hardware on behalf of system software
+ * Sets up the system to run other software
+ * Handles complex operations
+  * Virtual Memory
+  * Filesystem access
+  * Networking
+  * USB
 
 -----------------------------------------------------------
 
-## When/Where is the kernel
+## When/Where is the kernel?
 
-* When
- * The kernel is always running
- * Some exceptions
-* Where
- * Beneath the rest of the Operating System
- * Talking to the hardware
- * All your base are belong to it
+* The kernel is (almost) always running
+* Magically hidden in RAM
 
 -----------------------------------------------------------
 
-## Why?
+## Why have a kernel?
 
-* multi user systems
-  - pre-emptive scheduling
-* indirect hardware access
-  - gpu/hard disk type doesn't matter
+* Time Sharing (aka multi-program systems)
+ * Require threads & scheduling
+* Indirect hardware access
+ * GPU type doesn't matter (OpenGL interface)
+ * Networking/filesystem abstraction (read/write)
 
 -----------------------------------------------------------
 
-## Micro vs Macro
+## Kernel Style
 
 This talk is heavily influenced by micro-kernel architecture
+
+* Micro
+ * Many small services
+ * Message passing
+* Macro
+ * One monolith
+ * Re-entrant kernel code
 
 -----------------------------------------------------------
 
@@ -95,8 +101,8 @@ Now the bad news: it's not that easy.
 
 ## Writing a Kernel - Reading Documentation
 
+> Size of documentation is inversly proportional to component size
 * One week of light reading
-* Size of documentation is inversly proportional to component size
 * *~50 for TS-7200*
 * *~600 for Cirrus Logic System on a Chip*
 * *~1.5k for ARMv4 Technical + Architecture Reference Manuals*
@@ -209,6 +215,35 @@ Input and Output let you do everything.
 
 ## Writing a Kernel - Context Switch
 
+* What is the Context Switch?
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Context Switch
+
+* What is the Context Switch?
+ * Switch between running the kernel and user programs
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Context Switch
+
+* What is the Context Switch?
+ * Switch between running the kernel and user programs
+ * A bunch of Assembly
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Context Switch
+
+* What is the Context Switch?
+* Remember the documentation you read?
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Context Switch
+
+* What is the Context Switch?
 * Remember the documentation you read?
  * Probably not...
  * It took a few days to find all the magic constants
@@ -217,6 +252,7 @@ Input and Output let you do everything.
 
 ## Writing a Kernel - Context Switch
 
+* What is the Context Switch?
 * Remember the documentation you read?
  * Probably not...
  * It took a few days to find all the magic constants
@@ -226,6 +262,7 @@ Input and Output let you do everything.
 
 ## Writing a Kernel - Context Switch
 
+* What is the Context Switch?
 * Remember the documentation you read?
 * Figure out the CPU modes/protection
 
@@ -233,6 +270,7 @@ Input and Output let you do everything.
 
 ## Writing a Kernel - Context Switch
 
+* What is the Context Switch?
 * Remember the documentation you read?
 * Figure out the CPU modes/protection
  * These are fancy things that make life painful
@@ -241,6 +279,7 @@ Input and Output let you do everything.
 
 ## Writing a Kernel - Context Switch
 
+* What is the Context Switch?
 * Remember the documentation you read?
 * Figure out the CPU modes/protection
  * These are fancy things that make life painful
@@ -253,16 +292,70 @@ Input and Output let you do everything.
 
 ## Writing a Kernel - Context Switch
 
+* What is the Context Switch?
 * Remember the documentation you read?
 * Figure out the CPU modes/protection
-* Write some assembly
+* Write some Assembly
 
 -----------------------------------------------------------
 
-## Writing a Kernel - Context Switch
+## Writing a Kernel - Assembly
 
-* Remember the documentation you read?
-* Figure out the CPU modes/protection
-* Write some assembly
+In pseudo-assembly:
 
+    // Assembly file header stuff goes here.
+    
+    enter_kernel:
+         get user stack pointer
+         save user registers
+         get kernel stack pointer
+         save user stack pointer
+         restore kernel registers
+         jump into the kernel
+    
+    exit_kernel:
+         save kernel registers
+         get user stack pointer
+         restore user registers
+         jump into user program
+    
+    // Assembly file footer stuff goes here.
 
+-----------------------------------------------------------
+
+## Writing a Kernel - Assembly
+
+In pseudo-assembly:
+
+    // Assembly file header stuff goes here.
+    
+    enter_kernel:
+         get user stack pointer
+         save user registers
+         get kernel stack pointer
+         save user stack pointer
+         restore kernel registers
+         jump into the kernel
+    
+    exit_kernel:
+         save kernel registers
+         get user stack pointer
+         restore user registers
+         jump into user program
+    
+    // Assembly file footer stuff goes here.
+
+You're probably wondering why this is so hard.
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Assembly
+
+It is hard because:
+* You create the storage format for user data
+ * I've seen other people's assignments...
+ * I don't trust you.
+* If anything doesn't work exactly right everything breaks
+ * And it invokes your context switch
+* It can be subtly wrong and take ~1/2h to break
+ * IP register blunder
