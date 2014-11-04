@@ -16,12 +16,11 @@
  * What
  * Where
  * Why
-* micro vs macro
 * writing your own kernel
  * Before Starting
  * IO
- * Scheduling
  * Context Switch
+ * Scheduling
  * System Calls
 * next steps (or continued reading)
 
@@ -62,7 +61,8 @@
 
 ## Micro vs Macro
 
------------------------------------------------------------
+This talk is heavily influenced by micro-kernel architecture
+
 -----------------------------------------------------------
 
 ## Writing a Kernel
@@ -89,7 +89,7 @@ Now the bad news: it's not that easy.
 
 ## Writing a Kernel - Steps
 
-* Read Documentation
+* _*Read Documentation*_
 
 -----------------------------------------------------------
 
@@ -107,7 +107,7 @@ Now the bad news: it's not that easy.
 ## Writing a Kernel - Steps
 
 * Read Documentation
-* Write IO
+* _*Write IO*_
 
 -----------------------------------------------------------
 
@@ -162,3 +162,107 @@ Now the bad news: it's not that easy.
    A)       while( !(UART_FLAGS & _*UART_OUT_BITS*_) ) {
 
 * They're all documented _*somewhere*_...
+
+-----------------------------------------------------------
+
+## Writing a Kernel
+
+What do we have now?
+
+-----------------------------------------------------------
+
+## Writing a Kernel
+
+    void main(void){
+        char * out = "hello world\n";
+        while( *out ){
+            write( *out );
+            out++;
+        }
+        read();
+    }
+
+-----------------------------------------------------------
+
+## Writing a Kernel
+
+    void main(void){
+        char * out = "hello world\n";
+        while( *out ){
+            write( *out );
+            out++;
+        }
+        read();
+    }
+
+Input and Output let you do everything.
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Steps
+
+* Read Documentation
+* Write IO
+* _*Context Switch*_
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Context Switch
+
+* Remember the documentation you read?
+ * Probably not...
+ * It took a few days to find all the magic constants
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Context Switch
+
+* Remember the documentation you read?
+ * Probably not...
+ * It took a few days to find all the magic constants
+ * After you check it into version control, you go out drinking
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Context Switch
+
+* Remember the documentation you read?
+* Figure out the CPU modes/protection
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Context Switch
+
+* Remember the documentation you read?
+* Figure out the CPU modes/protection
+ * These are fancy things that make life painful
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Context Switch
+
+* Remember the documentation you read?
+* Figure out the CPU modes/protection
+ * These are fancy things that make life painful
+ * But are required to implement more advanced features
+  * Hardware Interrupts
+  * Memory Protection/Virtual Memory
+  * Handling illegal instruction execution
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Context Switch
+
+* Remember the documentation you read?
+* Figure out the CPU modes/protection
+* Write some assembly
+
+-----------------------------------------------------------
+
+## Writing a Kernel - Context Switch
+
+* Remember the documentation you read?
+* Figure out the CPU modes/protection
+* Write some assembly
+
+
