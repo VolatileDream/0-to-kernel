@@ -1,0 +1,6 @@
+# 0 to Kernel
+
+Abstract:
+
+From computing cluster, to laptop, to raspberry pi, all computing systems run a kernel. The kernel is the most integral piece of software running on a computer: as one of the lowest level it is required to support some of the most useful computing features. This talk will explore the process of writing a minimal kernel from scratch, common kernel responsibilities, and an explanation of why this tends to be difficult.
+
