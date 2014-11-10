@@ -359,3 +359,5 @@ It is hard because:
  * And it invokes your context switch
 * It can be subtly wrong and take ~1/2h to break
  * IP register blunder
+* You can't unit test it
+ * Hah.
