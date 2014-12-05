@@ -1,4 +1,4 @@
-%title: From 0 to Kernel and Some Other Stuff
+%title: From 0 to Kernel
 %author: Gianni Gambetti (VolatileDream)
 %date: 2014
 %comments: A talk about building a kernel targeted at 2nd year CS students at UW.
@@ -74,8 +74,9 @@
 
 * Time Sharing (aka multi-program systems)
  * Require threads & scheduling
-* Abstracted hardware access
+* Abstract Hardware Access & Common Interfaces
  * Filesystem (SCSI, USB, NFS, etc)
+ * Network (Ethernet, Wifi, etc)
 
 -----------------------------------------------------------
 
@@ -84,10 +85,13 @@
 This talk is heavily influenced by micro-kernel architecture
 
 * Micro
- * Many small services
  * Message passing
+ * Interrupts exposed to non-kernel processes
+ * Many small services make up kernel functionality
+ * Service reloading (in theory)
 * Macro
  * One monolith
+ * Responsible for everything
  * Re-entrant kernel code
 
 -----------------------------------------------------------
