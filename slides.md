@@ -28,33 +28,13 @@
 ## What is a kernel?
 
 * What it does
+<br>
  * Handles system boot from other software & hardware ( *magic* )
-
------------------------------------------------------------
-
-## What is a kernel?
-
-* What it does
- * Handles system boot from other software & hardware ( *magic* )
+<br>
  * _Usually_ talks to hardware on behalf of system software
-
------------------------------------------------------------
-
-## What is a kernel?
-
-* What it does
- * Handles system boot from other software & hardware ( *magic* )
- * _Usually_ talks to hardware on behalf of system software
+<br>
  * Sets up the system to run other software
-
------------------------------------------------------------
-
-## What is a kernel?
-
-* What it does
- * Handles system boot from other software & hardware ( *magic* )
- * _Usually_ talks to hardware on behalf of system software
- * Sets up the system to run other software
+<br>
  * Handles complex operations
   * Virtual Memory
   * Filesystem access
@@ -67,13 +47,7 @@
 
 * Time Sharing (aka multi-program systems)
  * Require threads & scheduling
-
------------------------------------------------------------
-
-## Why have a kernel?
-
-* Time Sharing (aka multi-program systems)
- * Require threads & scheduling
+<br>
 * Abstract Hardware Access & Common Interfaces
  * Filesystem (SCSI, USB, NFS, etc)
  * Network (Ethernet, Wifi, etc)
@@ -103,16 +77,7 @@ This talk is heavily influenced by micro-kernel architecture
     }
 
 That looks pretty easy, right?
-
------------------------------------------------------------
-
-## Writing a Kernel
-
-    void main(void){
-        print("hello world\n");
-    }
-
-That looks pretty easy, right?
+<br>
 
 Now the bad news: it's not that easy.
 
@@ -128,9 +93,13 @@ Now the bad news: it's not that easy.
 
 > Size of documentation is inversly proportional to component size
 * One week of reading
+<br>
 * *~50 for TS-7200*
+<br>
 * *~600 for Cirrus Logic System on a Chip*
+<br>
 * *~1.5k for ARMv4 Technical + Architecture Reference Manuals*
+<br>
 * *~3.5k for Intel® 64 and IA-32 Architectures Software Developer Manuals*
 
 -----------------------------------------------------------
@@ -145,20 +114,9 @@ Now the bad news: it's not that easy.
 ## Writing a Kernel - Writing IO
 
 * Remember the documentation you read?
-
------------------------------------------------------------
-
-## Writing a Kernel - Writing IO
-
-* Remember the documentation you read?
+<br>
 * This is hard: You don't get any output until it works
-
------------------------------------------------------------
-
-## Writing a Kernel - Writing IO
-
-* Remember the documentation you read?
-* This is hard: You don't get any output until it works
+<br>
 * But it's easy: 14 lines of code
 
    1)   volatile int \* UART_IO = (int*) 0x808C000;
@@ -185,30 +143,16 @@ Now the bad news: it's not that easy.
 * Remember the documentation you read?
 * This is hard: You don't get any output until it works
 * But it's easy: 14 lines of code
-* Where did those constants come from?
+ * Where did those constants come from?
 
    1)   volatile int \* UART_IO = (int*) _*0x808C000*_;
    2)   volatile int \* UART_FLAGS = UART_IO + _*UART_FLAG_OFFSET*_;
    4)       while( !(UART_FLAGS & _*UART_IN_BITS*_) ) {
    A)       while( !(UART_FLAGS & _*UART_OUT_BITS*_) ) {
+<br>
 
 * They're all documented _*somewhere*_...
-
------------------------------------------------------------
-
-## Writing a Kernel - Writing IO
-
-* Remember the documentation you read?
-* This is hard: You don't get any output until it works
-* But it's easy: 14 lines of code
-* Where did those constants come from?
-
-   1)   volatile int \* UART_IO = (int*) _*0x808C000*_;
-   2)   volatile int \* UART_FLAGS = UART_IO + _*UART_FLAG_OFFSET*_;
-   4)       while( !(UART_FLAGS & _*UART_IN_BITS*_) ) {
-   A)       while( !(UART_FLAGS & _*UART_OUT_BITS*_) ) {
-
-* They're all documented _*somewhere*_...
+<br>
  * It takes a few days to find all the magic constants
 
 -----------------------------------------------------------
@@ -217,10 +161,7 @@ Now the bad news: it's not that easy.
 
 What do we have now?
 
------------------------------------------------------------
-
-## Writing a Kernel
-
+<br>
     void main(void){
         char * out = "hello world\n";
         while( *out ){
@@ -230,19 +171,7 @@ What do we have now?
         read();
     }
 
------------------------------------------------------------
-
-## Writing a Kernel
-
-    void main(void){
-        char * out = "hello world\n";
-        while( *out ){
-            write( *out );
-            out++;
-        }
-        read();
-    }
-
+<br>
 Input and Output let you do everything.
 
 -----------------------------------------------------------
@@ -258,20 +187,9 @@ Input and Output let you do everything.
 ## Writing a Kernel - Scheduling
 
 Recall:
-
------------------------------------------------------------
-
-## Writing a Kernel - Scheduling
-
-Recall:
+<br>
  * Mathematics: Scheduling is *HARD* (NP Complete)
-
------------------------------------------------------------
-
-## Writing a Kernel - Scheduling
-
-Recall:
- * Mathematics: Scheduling is *HARD* (NP Complete)
+<br>
  * Engineering: KISS - Keep It Simple Stupid
 
 -----------------------------------------------------------
@@ -288,14 +206,7 @@ Recall:
 * Defines structure for Context Switch
 * Defines priority setup for threads
  * One or more
-
------------------------------------------------------------
-
-## Writing a Kernel - Scheduling
-
-* Defines structure for Context Switch
-* Defines priority setup for threads
- * One or more
+<br>
  * Optimal: 2+ for system + user
 
 -----------------------------------------------------------
@@ -305,35 +216,11 @@ Recall:
 * Defines structure for Context Switch
 * Defines priority setup for threads
 * Multitasking: co-operative or pre-emptive
-
------------------------------------------------------------
-
-## Writing a Kernel - Scheduling
-
-* Defines structure for Context Switch
-* Defines priority setup for threads
-* Multitasking: co-operative or pre-emptive
+<br>
  * Co-operative: threads give up CPU
-
------------------------------------------------------------
-
-## Writing a Kernel - Scheduling
-
-* Defines structure for Context Switch
-* Defines priority setup for threads
-* Multitasking: co-operative or pre-emptive
- * Co-operative: threads give up CPU
+<br>
  * Pre-emptive: interrupts bump threads off
-
------------------------------------------------------------
-
-## Writing a Kernel - Scheduling
-
-* Defines structure for Context Switch
-* Defines priority setup for threads
-* Multitasking: co-operative or pre-emptive
- * Co-operative: threads give up CPU
- * Pre-emptive: interrupts bump threads off
+<br>
  * Assumptions?
 
 -----------------------------------------------------------
@@ -371,20 +258,9 @@ Recall:
 ## Writing a Kernel - Context Switch
 
 * What is the Context Switch?
-
------------------------------------------------------------
-
-## Writing a Kernel - Context Switch
-
-* What is the Context Switch?
- * Switch between running the kernel and user programs
-
------------------------------------------------------------
-
-## Writing a Kernel - Context Switch
-
-* What is the Context Switch?
- * Switch between running the kernel and user programs
+<br>
+ * It switches between running the kernel and user programs
+<br>
  * A bunch of Assembly
 
 -----------------------------------------------------------
@@ -393,39 +269,11 @@ Recall:
 
 * What is the Context Switch?
 * Remember the documentation you read?
-
------------------------------------------------------------
-
-## Writing a Kernel - Context Switch
-
-* What is the Context Switch?
-* Remember the documentation you read?
-
------------------------------------------------------------
-
-## Writing a Kernel - Context Switch
-
-* What is the Context Switch?
-* Remember the documentation you read?
+<br>
 * Figure out the CPU modes/protection
-
------------------------------------------------------------
-
-## Writing a Kernel - Context Switch
-
-* What is the Context Switch?
-* Remember the documentation you read?
-* Figure out the CPU modes/protection
+<br>
  * These are fancy things that make life painful
-
------------------------------------------------------------
-
-## Writing a Kernel - Context Switch
-
-* What is the Context Switch?
-* Remember the documentation you read?
-* Figure out the CPU modes/protection
- * These are fancy things that make life painful
+<br>
  * But are required to implement more advanced features
   * Hardware Interrupts
   * Memory Protection/Virtual Memory
@@ -461,27 +309,7 @@ In pseudo-assembly:
          jump into user program
     // Assembly file footer stuff goes here.
 
------------------------------------------------------------
-
-## Writing a Kernel - Assembly
-
-In pseudo-assembly:
-
-    // Assembly file header stuff goes here.
-    enter_kernel:
-         get user stack pointer
-         save user registers
-         get kernel stack pointer
-         save user stack pointer
-         restore kernel registers
-         jump into the kernel
-    exit_kernel:
-         save kernel registers
-         get user stack pointer
-         restore user registers
-         jump into user program
-    // Assembly file footer stuff goes here.
-
+<br>
 You're probably wondering why this is so hard.
 
 -----------------------------------------------------------
@@ -491,40 +319,13 @@ You're probably wondering why this is so hard.
 * You create the storage format for user data
  * Maintains process information (stack, program counter, etc.)
  * Assignment error checking
-
------------------------------------------------------------
-
-## Writing a Kernel - Assembly
-
-* You create the storage format for user data
- * Maintains process information (stack, program counter, etc.)
- * Assignment error checking
+<br>
 * If anything doesn't work exactly right everything breaks
  * And it invokes your context switch
-
------------------------------------------------------------
-
-## Writing a Kernel - Assembly
-
-* You create the storage format for user data
- * Maintains process information (stack, program counter, etc.)
- * Assignment error checking
-* If anything doesn't work exactly right everything breaks
- * And it invokes your context switch
+<br>
 * It can be subtly wrong and take ~1/2h to break
  * IP register blunder
-
------------------------------------------------------------
-
-## Writing a Kernel - Assembly
-
-* You create the storage format for user data
- * Maintains process information (stack, program counter, etc.)
- * Assignment error checking
-* If anything doesn't work exactly right everything breaks
- * And it invokes your context switch
-* It can be subtly wrong and take ~1/2h to break
- * IP register blunder
+<br>
 * You can't unit test it
 
 -----------------------------------------------------------
@@ -554,29 +355,11 @@ You're probably wondering why this is so hard.
 ## Writing a Kernel - System Calls
 
 * What's a system call?
-
------------------------------------------------------------
-
-## Writing a Kernel - System Calls
-
-* What's a system call?
+<br>
  * User program talking to the kernel
-
------------------------------------------------------------
-
-## Writing a Kernel - System Calls
-
-* What's a system call?
- * User program talking to the kernel
+<br>
  * Magic that user programs can't do
-
------------------------------------------------------------
-
-## Writing a Kernel - System Calls
-
-* What's a system call?
- * User program talking to the kernel
- * Magic that user programs can't do
+<br>
  * Examples
   * Process creation
   * Interrupt handling
@@ -588,68 +371,17 @@ You're probably wondering why this is so hard.
 
 * What's a system call?
 * How does it work
-
------------------------------------------------------------
-
-## Writing a Kernel - System Calls
-
-* What's a system call?
-* How does it work
+<br>
  * Trigger an interrupt
-
------------------------------------------------------------
-
-## Writing a Kernel - System Calls
-
-* What's a system call?
-* How does it work
- * Trigger an interrupt
+<br>
   * Standardized by architecture
-
------------------------------------------------------------
-
-## Writing a Kernel - System Calls
-
-* What's a system call?
-* How does it work
- * Trigger an interrupt
-  * Standardized by architecture
+<br>
   * Special Assembly instructions
-
------------------------------------------------------------
-
-## Writing a Kernel - System Calls
-
-* What's a system call?
-* How does it work
- * Trigger an interrupt
-  * Standardized by architecture
-  * Special Assembly instructions
+<br>
  * Enter the kernel
-
------------------------------------------------------------
-
-## Writing a Kernel - System Calls
-
-* What's a system call?
-* How does it work
- * Trigger an interrupt
-  * Standardized by architecture
-  * Special Assembly instructions
- * Enter the kernel
+<br>
  * Kernel does magic
-
------------------------------------------------------------
-
-## Writing a Kernel - System Calls
-
-* What's a system call?
-* How does it work
- * Trigger an interrupt
-  * Standardized by architecture
-  * Special Assembly instructions
- * Enter the kernel
- * Kernel does magic
+<br>
  * Exit the kernel
 
 -----------------------------------------------------------
@@ -659,24 +391,9 @@ You're probably wondering why this is so hard.
 * What's a system call?
 * How does it work
 * Passing data
-
------------------------------------------------------------
-
-## Writing a Kernel - System Calls
-
-* What's a system call?
-* How does it work
-* Passing data
+<br>
  * The kernel can do anything
-
------------------------------------------------------------
-
-## Writing a Kernel - System Calls
-
-* What's a system call?
-* How does it work
-* Passing data
- * The kernel can do anything
+<br>
  * It reads your data
 
 -----------------------------------------------------------
